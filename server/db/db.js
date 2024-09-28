@@ -1,39 +1,41 @@
-import {Schema} from "mongoose";
-import mongoose from "mongoose";
+const mongoose = require("mongoose")
 
 mongoose.connect("");
+const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 const userSchema = new Schema({
-    name: {
-        type:String,
-        unique:true
-    },
-    password:{
-        type:String,
-    },
-    courses: {
-        type:Array,
-
-    }
+    firstname:String,
+    lastname:String,
+    email:{type:String, unique:true},
+    password:String
 })
 const adminSchema = new Schema({
-     name: {
-        type:String,
-        unique:true
-    },
-    password:{
-        type:String,
-    },
-    courses: {
-        type:Array,
-        
-    }
+    firstname:String,
+    lastname:String,
+    email:{type:String, unique:true},
+    password:String
 })
 const courseSchema = new Schema({
-    courseId:{type: Schema.Types.ObjectId, ref:'Admins'},
-    
+    title:String,
+    description:String,
+    price:Number,
+    creatorId:ObjectId,
+    imageUrl:String
 })
+const purchaseSchema = new Schema({
+    userId: ObjectId,
+    courseId: ObjectId
+});
 
-const User = new mongoose.model('User',userSchema);
-const Admin = new mongoose.model('Admin',adminSchema);
-const Course = new mongoose.model('Course',courseSchema);
+const userModel = mongoose.model("user", userSchema);
+const adminModel = mongoose.model("admin", adminSchema);
+const courseModel = mongoose.model("course", courseSchema);
+const purchaseModel = mongoose.model("purchase", purchaseSchema);
+
+module.exports = {
+    userModel,
+    adminModel,
+    courseModel,
+    purchaseModel
+}

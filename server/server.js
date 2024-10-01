@@ -13,10 +13,12 @@ const secret = process.env.JWT_SECRET;  // This should be in an environment vari
 const port = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 
-app.use('api/v1/user', userRouter);
-app.use('api/v1/admin', adminRouter);
-app.use('api/v1/course', courseRouter);
-
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/admin', adminRouter);
+app.use('/api/v1/course', courseRouter);
+app.get('/api/v1/test', (req, res) => {
+    res.send('Hello, World!');
+});
 async function dbConnect() {
     await mongoose.connect(MONGO_URL);
     console.log("db connected");
